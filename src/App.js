@@ -7,7 +7,12 @@ function App() {
   return (
     <div className="app">
       <Nav />
-      <Post />
+      <div className="dashboard">
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+      </div>
     </div>
   );
 }
