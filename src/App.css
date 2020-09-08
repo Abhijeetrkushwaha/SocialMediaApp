@@ -51,7 +51,10 @@ body{
   display: flex;
   align-items: center;
 }
-.user__info h3{
+.info__img{
+  margin-right: 5px;
+}
+/* .user__info h3{
   text-align: center;
   line-height: 30px;
   width: 35px;
@@ -59,7 +62,7 @@ body{
   margin-right: 5px;
   border-radius: 50%;
   border: 2px solid orange;
-}
+} */
 .post__image img{
   width: 100%;
   object-fit: contain;

@@ -1,13 +1,15 @@
 import React from 'react';
-import Chatapp from '../sample-images/chatapp.png'
+import Chatapp from '../sample-images/chatapp.png';
+import Avatar from '@material-ui/core/Avatar'
 
-export default function Post() {
+
+export default function Post({username, projectName, description}) {
     return (
         <div className="post">
             <div className="post__user">
                 <div className="user__info">
-                    <h3>A</h3>
-                    <p>Abhijeet Kushwaha</p>
+                    <Avatar className="info__img" alt={username} src='/img' />
+                    <p>{username}</p>
                 </div>
                 <div className="post__time">
                     <p>2 hours ago</p>
@@ -17,8 +19,8 @@ export default function Post() {
                 <img src={Chatapp} alt="Chat preview"/>
             </div>
             <div className="post__info">
-                <h3>Chat application</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus, recusandae.</p>
+                <h3>{projectName}</h3>
+                <p>{description}</p>
                 <button>view</button>
             </div>
         </div>
