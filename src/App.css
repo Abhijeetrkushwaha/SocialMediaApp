@@ -8,10 +8,10 @@ body{
 }
 .nav{
   width: 100%;
-  position: fixed;
+  /* position: fixed;
   z-index: 9999;
   top: 0;
-  left: 0;
+  left: 0; */
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   margin-bottom: 10px;
   background-color: white;
