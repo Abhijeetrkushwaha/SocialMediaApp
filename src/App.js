@@ -5,6 +5,7 @@ import Post from './components/Post';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Input } from '@material-ui/core';
+import ImageUpload from './components/ImageUpload'
 
 function getModalStyle() {
   const top = 50;
@@ -59,14 +60,14 @@ function App() {
   }, [user, username]);
 
   
-  // useEffect(() => {
-  //   db.collection('posts')
-  //   .onSnapshot(snapshot =>{
-  //       setPosts(snapshot.docs.map(doc => (
-  //         {post: doc.data(), id: doc.id}
-  //       )))
-  //   })
-  // }, [] )
+  useEffect(() => {
+    db.collection('posts')
+    .onSnapshot(snapshot =>{
+        setPosts(snapshot.docs.map(doc => (
+          {post: doc.data(), id: doc.id}
+        )))
+    })
+  }, [] )
   const signUp = (e) => {
     e.preventDefault()
     
@@ -160,10 +161,19 @@ function App() {
       <div className="dashboard">
         {
           posts.map(({post, id}) => {
-            return <Post username={post.username} projectName={post.projectName} description={post.description} key={id} />
+            return <Post username={post.username} projectName={post.projectName} description={post.description} imageUrl={post.imageUrl} key={id} />
           })
         }
       </div>
+        { 
+          user ? (
+            user?.displayName ? (
+              <ImageUpload username={user.displayName} />
+            ) : (
+              <h2>Sorry you need to login</h2>
+            )
+          ) : (null)
+         }
     </div>
   );
 }
