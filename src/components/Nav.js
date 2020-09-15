@@ -2,6 +2,7 @@ import React from 'react'
 import ChatLogo from '../sample-images/chatlogo.png'
 
 function Nav() {
+
     return (
         <div className="nav">
             <div className="nav__info">

@@ -46,7 +46,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user is logged in...
-        // console.log(authUser);
+        console.log(authUser);
         setUser(authUser);
         setWaitToLoad(true)
 
@@ -75,14 +75,21 @@ function App() {
   const signUp = (e) => {
     e.preventDefault()
     
-    auth.createUserWithEmailAndPassword(email, password)
-    .then((authUser) => {
-      return authUser.user.updateProfile({
-        displayName: username,
+    if(username) {
+        auth.createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username,
+        })
       })
-    })
-    .catch((err) => alert(err.message))
-    setOpen(false)
+      .catch((err) => alert(err.message))
+      setOpen(false)
+      setEmail('')
+      setPassword('')
+      setUsername('')
+    } else {
+      alert('Enter user name')
+    }
   }
 
   const signIn = (e) => {
@@ -92,14 +99,24 @@ function App() {
     .catch((err) => alert(err.message))
 
     setOpenSignIn(false)
+    setEmail('')
+    setPassword('')
   }
   const links = user ? (
-    <Button onClick={() => auth.signOut()}>Logout</Button>
+    <Button onClick={() => {
+      auth.signOut()
+    }}>Logout</Button>
   ) : (
     <div>
       <Button onClick={() => setOpenSignIn(true)}>Login</Button>
       <Button onClick={() => setOpen(true)}>Sign up</Button>
     </div>
+  )
+
+  const imageUploader = user?.displayName ? (
+    <ImageUpload username={user.displayName} />
+  ) : (
+    null
   )
   
   return (
@@ -109,6 +126,9 @@ function App() {
       {
          waitToLoad && links
       }
+      { 
+          imageUploader
+       }
       
       <Modal
         open={open}
@@ -171,20 +191,6 @@ function App() {
           })
         }
       </div>
-        { 
-          // user ? (
-          //   user?.displayName ? (
-          //     <ImageUpload username={user.displayName} />
-          //   ) : (
-          //     null
-          //   )
-          // ) : (<h2>Sorry you need to login</h2>)
-          user?.displayName ? (
-                <ImageUpload username={user.displayName} />
-              ) : (
-                <h2>Sorry you need to login</h2>
-              )
-         }
     </div>
   );
 }
