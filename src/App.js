@@ -5,7 +5,8 @@ import Post from './components/Post';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Input } from '@material-ui/core';
-import ImageUpload from './components/ImageUpload'
+import ImageUpload from './components/ImageUpload';
+import Loader from './components/Loader'
 
 function getModalStyle() {
   const top = 50;
@@ -39,17 +40,20 @@ function App() {
   const [openSignIn, setOpenSignIn] = useState(false);
   const [modalStyle] = useState(getModalStyle);
   const [user, setUser] = useState(null)
+  const [waitToLoad, setWaitToLoad] = useState(false)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user is logged in...
-        console.log(authUser);
+        // console.log(authUser);
         setUser(authUser);
+        setWaitToLoad(true)
 
       } else {
         // user is logged out...
         setUser(null)
+        setWaitToLoad(true)
       }
     })
 
@@ -89,19 +93,21 @@ function App() {
 
     setOpenSignIn(false)
   }
+  const links = user ? (
+    <Button onClick={() => auth.signOut()}>Logout</Button>
+  ) : (
+    <div>
+      <Button onClick={() => setOpenSignIn(true)}>Login</Button>
+      <Button onClick={() => setOpen(true)}>Sign up</Button>
+    </div>
+  )
   
   return (
     <div className="app">
+      <Loader />
       <Nav />
       {
-        user ? (
-          <Button onClick={() => auth.signOut()}>Logout</Button>
-        ) : (
-          <div>
-            <Button onClick={() => setOpenSignIn(true)}>Login</Button>
-            <Button onClick={() => setOpen(true)}>Sign up</Button>
-          </div>
-        )
+         waitToLoad && links
       }
       
       <Modal
@@ -166,13 +172,18 @@ function App() {
         }
       </div>
         { 
-          user ? (
-            user?.displayName ? (
-              <ImageUpload username={user.displayName} />
-            ) : (
-              <h2>Sorry you need to login</h2>
-            )
-          ) : (null)
+          // user ? (
+          //   user?.displayName ? (
+          //     <ImageUpload username={user.displayName} />
+          //   ) : (
+          //     null
+          //   )
+          // ) : (<h2>Sorry you need to login</h2>)
+          user?.displayName ? (
+                <ImageUpload username={user.displayName} />
+              ) : (
+                <h2>Sorry you need to login</h2>
+              )
          }
     </div>
   );
