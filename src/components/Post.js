@@ -3,7 +3,7 @@ import Chatapp from '../sample-images/chatapp.png';
 import Avatar from '@material-ui/core/Avatar'
 
 
-export default function Post({username, projectName, description}) {
+export default function Post({username, projectName, description, imageUrl}) {
     return (
         <div className="post">
             <div className="post__user">
@@ -16,7 +16,7 @@ export default function Post({username, projectName, description}) {
                 </div>
             </div>
             <div className="post__image">
-                <img src={Chatapp} alt="Chat preview"/>
+                <img src={imageUrl} alt="Chat preview"/>
             </div>
             <div className="post__info">
                 <h3>{projectName}</h3>

@@ -103,20 +103,17 @@ function App() {
     setPassword('')
   }
   const links = user ? (
-    <Button onClick={() => {
+    <div>
+      <Button onClick={() => {
       auth.signOut()
     }}>Logout</Button>
+    <ImageUpload user={user} />
+    </div>
   ) : (
     <div>
       <Button onClick={() => setOpenSignIn(true)}>Login</Button>
       <Button onClick={() => setOpen(true)}>Sign up</Button>
     </div>
-  )
-
-  const imageUploader = user?.displayName ? (
-    <ImageUpload username={user.displayName} />
-  ) : (
-    null
   )
   
   return (
@@ -126,9 +123,13 @@ function App() {
       {
          waitToLoad && links
       }
-      { 
-          imageUploader
-       }
+      {/* { 
+         user?.displayName ? (
+          <ImageUpload username={user.displayName} />
+          ) : (
+            null
+          )
+      } */}
       
       <Modal
         open={open}

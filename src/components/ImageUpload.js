@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storage, db } from '../firebase';
 import firebase from 'firebase'
 
-function ImageUpload({ username }) {
+function ImageUpload({ user }) {
 
     const [caption, setCaption] = useState('');
     const [des, setDes] = useState('');
@@ -41,7 +41,7 @@ function ImageUpload({ username }) {
                 .then(url => {
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        username: username,
+                        username: user.displayName,
                         projectName: caption,
                         description: des,
                         imageUrl: url,
