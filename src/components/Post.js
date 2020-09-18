@@ -1,5 +1,5 @@
 import React from 'react';
-import Chatapp from '../sample-images/chatapp.png';
+// import Chatapp from '../sample-images/chatapp.png';
 import Avatar from '@material-ui/core/Avatar'
 
 
