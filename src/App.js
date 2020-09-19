@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Nav from './components/Nav';
+// import Nav from './components/Nav';
 import Post from './components/Post';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Input } from '@material-ui/core';
 import ImageUpload from './components/ImageUpload';
-import Loader from './components/Loader'
+// import Loader from './components/Loader'
 
 function getModalStyle() {
   const top = 50;
@@ -104,26 +104,33 @@ function App() {
     setPassword('')
   }
   const links = user ? (
-    <div>
+    <div className="btn">
       <Button onClick={() => {
       auth.signOut()
     }}>Logout</Button>
-    <ImageUpload user={user} />
     </div>
   ) : (
-    <div>
+    <div className="btn">
       <Button onClick={() => setOpenSignIn(true)}>Login</Button>
       <Button onClick={() => setOpen(true)}>Sign up</Button>
     </div>
   )
+
+  const postUpload = user ? (
+    <ImageUpload user={user} />
+  ) : null
   
   return (
     <div className="app">
-      <Loader />
-      <Nav />
-      {
-         waitToLoad && links
-      }
+      {/* <Loader /> */}
+      {/* <Nav /> */}
+      <div className="nav">
+       <div className="nav-info">
+        {
+          waitToLoad && links
+        }
+       </div>
+      </div>
       {/* { 
          user?.displayName ? (
           <ImageUpload username={user.displayName} />
@@ -187,6 +194,9 @@ function App() {
         </div>
       </Modal>
       <div className="dashboard">
+         <div className="postUpload">
+         { postUpload }
+         </div>
         {
           posts.map(({post, id}) => {
             return <Post username={post.username} projectName={post.projectName} description={post.description} imageUrl={post.imageUrl} key={id} />
