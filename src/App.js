@@ -47,7 +47,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user is logged in...
-        console.log(authUser);
+        // console.log(authUser);
         setUser(authUser);
         setWaitToLoad(true)
 
@@ -129,7 +129,11 @@ function App() {
 
   const postUpload = user ? (
     <ImageUpload user={user} />
-  ) : null
+  ) : (
+    <center>
+      <h2>Login to upload post</h2>
+    </center>
+  )
   
   return (
     <div className="app">
@@ -208,11 +212,11 @@ function App() {
       </Modal>
       <div className="dashboard">
          <div className="postUpload">
-         { postUpload }
+         { waitToLoad && postUpload }
          </div>
         {
           posts.map(({post, id}) => {
-            return <Post username={post.username} projectName={post.projectName} description={post.description} imageUrl={post.imageUrl} key={id} />
+            return <Post username={post.username} description={post.description} timestamp={post.timestamp} imageUrl={post.imageUrl} key={id} />
           })
         }
       </div>

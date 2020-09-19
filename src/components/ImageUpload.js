@@ -4,7 +4,6 @@ import firebase from 'firebase'
 
 function ImageUpload({ user }) {
 
-    const [caption, setCaption] = useState('');
     const [des, setDes] = useState('');
     const [progress, setProgress] = useState(0);
     const [image, setImage] = useState(null)
@@ -18,7 +17,7 @@ function ImageUpload({ user }) {
 
     const handleUpload = (e) => {
         e.preventDefault()
-        if(image && des && caption){
+        if(image && des){
             setWaitSignal('Just a second post is uploading')
             const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
@@ -46,12 +45,10 @@ function ImageUpload({ user }) {
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         username: user.displayName,
-                        projectName: caption,
                         description: des,
                         imageUrl: url,
                     });
                     setProgress(0);
-                    setCaption('');
                     setDes('');
                     setImage(null);
                     setWaitSignal('')
@@ -73,11 +70,12 @@ function ImageUpload({ user }) {
                         {waitSignal}
                         </center>
                     </div>
+                    <center>
                     <div className="input-fields">
-                        <input type="text" placeholder="Enter a project name..." value={caption} onChange={(e) => setCaption(e.target.value)}/>
                         <input type="text" placeholder="Enter a description..." value={des} onChange={(e) => setDes(e.target.value)}/> <br/>
                         <input type="file" onChange={handleChange}/>
                     </div>
+                    </center>
                     <button onClick={handleUpload}>Upload</button>
                 </div>
             </form>

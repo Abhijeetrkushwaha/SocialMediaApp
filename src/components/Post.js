@@ -1,9 +1,11 @@
 import React from 'react';
 // import Chatapp from '../sample-images/chatapp.png';
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@material-ui/core/Avatar';
+import moment from 'moment'
 
 
-export default function Post({username, projectName, description, imageUrl}) {
+export default function Post({username, description, imageUrl, timestamp}) {
+    // console.log(timestamp);
     return (
         <div className="post">
             <div className="post__user">
@@ -12,15 +14,18 @@ export default function Post({username, projectName, description, imageUrl}) {
                     <p>{username}</p>
                 </div>
                 <div className="post__time">
-                    <p>2 hours ago</p>
+                <p>{ timestamp && moment(timestamp.toDate()).calendar()}</p>
                 </div>
             </div>
             <div className="post__image">
-                <img src={imageUrl} alt="Chat preview"/>
+                {
+                    imageUrl && <img src={imageUrl} alt="Technical issue or slow net speed"/>
+                }
             </div>
             <div className="post__info">
-                <h3>{projectName}</h3>
-                <p>{description}</p>
+                {/* <p>{username}</p>
+                <p>{description}</p> */}
+                <h3>{username}: <span className="light-col">{description}</span></h3>
             </div>
         </div>
     )
