@@ -111,11 +111,7 @@ function App() {
   }
   const links = user ? (
     <div className="btn btn-logout">
-      {
-        user?.displayName ? (
-          <h4><span className="welcome">Welcome </span>{user.displayName}</h4>
-        ) : null
-      }
+      <h4><span className="welcome">Welcome </span> To Snapost</h4>
       <Button onClick={() => {
       auth.signOut()
     }}>Logout</Button>
