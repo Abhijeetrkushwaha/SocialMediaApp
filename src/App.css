@@ -19,6 +19,12 @@ body{
 .btn{
   margin: 0 10px;
 }
+.btn-logout{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .postUpload{
   padding: 10px 20px;
 }
@@ -84,4 +90,12 @@ body{
   outline: none;
   background-color: orange;
   border-radius: 15px;
+}
+.form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.welcome{
+  color: orange;
 }

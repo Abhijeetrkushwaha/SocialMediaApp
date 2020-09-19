@@ -39,8 +39,9 @@ function App() {
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [modalStyle] = useState(getModalStyle);
-  const [user, setUser] = useState(null)
-  const [waitToLoad, setWaitToLoad] = useState(false)
+  const [user, setUser] = useState(null);
+  const [waitToLoad, setWaitToLoad] = useState(false);
+  const [waitSignal, setWaitSignal] = useState('')
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -75,36 +76,46 @@ function App() {
   }, [] )
   const signUp = (e) => {
     e.preventDefault()
-    
-    if(username) {
+      setWaitSignal('just a second....')
         auth.createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
+        setOpen(false)
+        setEmail('')
+        setPassword('')
+        setUsername('')
+        setWaitSignal('')
         return authUser.user.updateProfile({
           displayName: username,
         })
       })
-      .catch((err) => alert(err.message))
-      setOpen(false)
-      setEmail('')
-      setPassword('')
-      setUsername('')
-    } else {
-      alert('Enter user name')
-    }
+      .catch((err) => {
+        alert(err.message)
+        setWaitSignal('')
+      })
   }
 
   const signIn = (e) => {
     e.preventDefault()
-
+    setWaitSignal('just a second....')
     auth.signInWithEmailAndPassword(email, password)
-    .catch((err) => alert(err.message))
-
-    setOpenSignIn(false)
-    setEmail('')
-    setPassword('')
+    .then(() => {
+      setOpenSignIn(false)
+      setEmail('')
+      setPassword('')
+      setWaitSignal('')
+    })
+    .catch((err) => {
+      alert(err.message)
+      setWaitSignal('')
+    })
   }
   const links = user ? (
-    <div className="btn">
+    <div className="btn btn-logout">
+      {
+        user?.displayName ? (
+          <h4><span className="welcome">Welcome </span>{user.displayName}</h4>
+        ) : null
+      }
       <Button onClick={() => {
       auth.signOut()
     }}>Logout</Button>
@@ -145,6 +156,7 @@ function App() {
       >
         <div style={modalStyle} className={classes.paper}>
           <form>
+            <center><p>{waitSignal}</p></center>
             <Input 
               type="text"
               placeholder="username"
@@ -176,6 +188,7 @@ function App() {
       >
         <div style={modalStyle} className={classes.paper}>
           <form>
+            <center><p>{waitSignal}</p></center>
             <Input 
               type="email"
               placeholder="email"

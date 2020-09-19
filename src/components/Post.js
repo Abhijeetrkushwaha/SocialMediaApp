@@ -21,7 +21,6 @@ export default function Post({username, projectName, description, imageUrl}) {
             <div className="post__info">
                 <h3>{projectName}</h3>
                 <p>{description}</p>
-                <button>Add comment</button>
             </div>
         </div>
     )

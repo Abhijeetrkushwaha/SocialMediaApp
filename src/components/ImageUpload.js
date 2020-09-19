@@ -8,6 +8,7 @@ function ImageUpload({ user }) {
     const [des, setDes] = useState('');
     const [progress, setProgress] = useState(0);
     const [image, setImage] = useState(null)
+    const [waitSignal, setWaitSignal] = useState('')
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -15,8 +16,11 @@ function ImageUpload({ user }) {
         }
     }
 
-    const handleUpload = () => {
-        const uploadTask = storage.ref(`images/${image.name}`).put(image)
+    const handleUpload = (e) => {
+        e.preventDefault()
+        if(image && des && caption){
+            setWaitSignal('Just a second post is uploading')
+            const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
         uploadTask.on(
             "state_changed",
@@ -50,18 +54,33 @@ function ImageUpload({ user }) {
                     setCaption('');
                     setDes('');
                     setImage(null);
+                    setWaitSignal('')
                 })
             }
         )
+        } else {
+            alert('please fill all required field')
+        }
     }
 
     return (
         <div>
-            <progress value={progress} max="100" />
-            <input type="text" placeholder="Enter a project name..." value={caption} onChange={(e) => setCaption(e.target.value)}/>
-            <input type="text" placeholder="Enter a description..." value={des} onChange={(e) => setDes(e.target.value)}/>
-            <input type="file" onChange={handleChange}/>
-            <button onClick={handleUpload}>Upload</button>
+            <form>
+                <div className="form">
+                    <div className="form-progress">
+                        <progress value={progress} max="100" /> <br/>
+                        <center>
+                        {waitSignal}
+                        </center>
+                    </div>
+                    <div className="input-fields">
+                        <input type="text" placeholder="Enter a project name..." value={caption} onChange={(e) => setCaption(e.target.value)}/>
+                        <input type="text" placeholder="Enter a description..." value={des} onChange={(e) => setDes(e.target.value)}/> <br/>
+                        <input type="file" onChange={handleChange}/>
+                    </div>
+                    <button onClick={handleUpload}>Upload</button>
+                </div>
+            </form>
         </div>
     )
 }
