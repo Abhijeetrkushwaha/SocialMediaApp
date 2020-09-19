@@ -72,7 +72,7 @@ function ImageUpload({ user }) {
                     </div>
                     <center>
                     <div className="input-fields">
-                        <input type="text" placeholder="Enter a description..." value={des} onChange={(e) => setDes(e.target.value)}/> <br/>
+                        <input type="text" placeholder="Enter a Caption..." value={des} onChange={(e) => setDes(e.target.value)}/> <br/>
                         <input type="file" onChange={handleChange}/>
                     </div>
                     </center>
