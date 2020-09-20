@@ -17,9 +17,10 @@ function ImageUpload({ user }) {
 
     const handleUpload = (e) => {
         e.preventDefault()
+        let randomNo = Math.random()
         if(image && des){
             setWaitSignal('Just a second post is uploading')
-            const uploadTask = storage.ref(`images/${image.name}`).put(image)
+            const uploadTask = storage.ref(`images/${randomNo}`).put(image)
 
         uploadTask.on(
             "state_changed",
@@ -39,7 +40,7 @@ function ImageUpload({ user }) {
                 // complete function...
                 storage
                 .ref("images")
-                .child(image.name)
+                .child(`${randomNo}`)
                 .getDownloadURL()
                 .then(url => {
                     db.collection("posts").add({
