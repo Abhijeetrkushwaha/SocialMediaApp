@@ -156,7 +156,8 @@ function App() {
       >
         <div style={modalStyle} className={classes.paper}>
           <form>
-            <center><p>{waitSignal}</p></center>
+            <center><p><div className="orange">{waitSignal}</div></p></center>
+            <div className="login-signup-form">
             <Input 
               type="text"
               placeholder="username"
@@ -177,6 +178,7 @@ function App() {
             />
             <br/>
             <Button onClick={signUp}>Submit</Button>
+            </div>
           </form>
         </div>
       </Modal>
@@ -188,7 +190,8 @@ function App() {
       >
         <div style={modalStyle} className={classes.paper}>
           <form>
-            <center><p>{waitSignal}</p></center>
+            <center><p><div className="orange">{waitSignal}</div></p></center>
+            <div className="login-signup-form">
             <Input 
               type="email"
               placeholder="email"
@@ -203,6 +206,7 @@ function App() {
             />
             <br/>
             <Button onClick={signIn}>Submit</Button>
+            </div>
           </form>
         </div>
       </Modal>

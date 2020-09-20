@@ -64,19 +64,18 @@ function ImageUpload({ user }) {
         <div>
             <form>
                 <div className="form">
-                    <div className="form-progress">
-                        <progress value={progress} max="100" /> <br/>
-                        <center>
-                        {waitSignal}
-                        </center>
+                   <div className="input-fields">
+                   <progress value={progress} max="100" />
+                    <div className="orange">
+                    {waitSignal}
                     </div>
-                    <center>
-                    <div className="input-fields">
-                        <input type="text" placeholder="Enter a Caption..." value={des} onChange={(e) => setDes(e.target.value)}/> <br/>
                         <input type="file" onChange={handleChange}/>
-                    </div>
-                    </center>
-                    <button onClick={handleUpload}>Upload</button>
+                    <input type="text" placeholder="Enter a Caption..." value={des} onChange={(e) => setDes(e.target.value)}/>
+                   </div>
+                   <div className="btn-upload">
+                   <button onClick={handleUpload}>Upload</button>
+                   </div>
+                    
                 </div>
             </form>
         </div>
